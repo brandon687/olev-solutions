@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: { appDir: true }
+  // appDir is now stable in Next.js 14 and enabled by default
 };
+
 export default nextConfig;
