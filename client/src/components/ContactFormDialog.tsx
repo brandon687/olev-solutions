@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 interface ContactFormDialogProps {
   open: boolean;
@@ -24,17 +25,31 @@ export default function ContactFormDialog({ open, onOpenChange }: ContactFormDia
     company: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    toast({
-      title: "Request received",
-      description: "We'll be in touch within 24 hours.",
-    });
-    onOpenChange(false);
-    setFormData({ name: "", email: "", company: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      await apiRequest("POST", "/api/contact", formData);
+
+      toast({
+        title: "Request received",
+        description: "We'll be in touch within 24 hours.",
+      });
+      onOpenChange(false);
+      setFormData({ name: "", email: "", company: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "Please try again or contact us directly at hello@olev.solutions",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -93,8 +108,13 @@ export default function ContactFormDialog({ open, onOpenChange }: ContactFormDia
               data-testid="input-message"
             />
           </div>
-          <Button type="submit" className="w-full" data-testid="button-submit-contact">
-            Submit request
+          <Button 
+            type="submit" 
+            className="w-full" 
+            data-testid="button-submit-contact"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit request"}
           </Button>
         </form>
       </DialogContent>
