@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Hero from "@/components/Hero";
 import Capabilities from "@/components/Capabilities";
+import MetricsBar from "@/components/MetricsBar";
 import CodeShowcase from "@/components/CodeShowcase";
 import AdvancedFlows from "@/components/AdvancedFlows";
 import IntegrationShowcase from "@/components/IntegrationShowcase";
@@ -24,6 +25,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Hero onBookCall={handleBookCall} onSeeCapabilities={handleSeeCapabilities} />
+      <MetricsBar />
       <Capabilities />
       <CodeShowcase />
       <AdvancedFlows />

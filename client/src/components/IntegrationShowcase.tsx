@@ -3,38 +3,39 @@ import { Card } from "@/components/ui/card";
 
 const integrations = [
   {
-    category: "Data Sources",
-    items: ["Kafka", "PostgreSQL", "MongoDB", "S3", "Snowflake"],
-    code: `connect({
-  kafka: { brokers: [...] },
-  postgres: { ...config },
-  s3: { bucket: '...' }
+    category: "Enterprise Data Platforms",
+    items: ["Kafka", "Kinesis", "Pulsar", "RabbitMQ", "Snowflake", "Databricks", "BigQuery"],
+    code: `sources.multi_cloud({
+  kafka: { throughput: '5M/s' },
+  snowflake: { warehouse: 'XL' },
+  databricks: { ml_runtime: true }
 })`
   },
   {
-    category: "Processing",
-    items: ["Spark", "Airflow", "dbt", "Flink", "Custom"],
-    code: `pipeline
-  .spark()
-  .dbt()
-  .custom(fn)`
-  },
-  {
-    category: "Security",
-    items: ["Vault", "KMS", "SSO", "RBAC", "Audit"],
-    code: `@secured({
-  vault: true,
-  kms: 'aws',
-  rbac: roles
+    category: "ML & Analytics",
+    items: ["SageMaker", "Vertex AI", "MLflow", "Kubeflow", "TensorFlow", "PyTorch"],
+    code: `ml.orchestrate({
+  training: gpu_clusters,
+  serving: auto_scale,
+  monitoring: drift_detection
 })`
   },
   {
-    category: "Observability",
-    items: ["Datadog", "Grafana", "PagerDuty", "Sentry"],
-    code: `monitor({
-  metrics: true,
-  alerts: [...],
-  dashboards: [...]
+    category: "Security & Compliance",
+    items: ["Vault", "KMS", "HSM", "Zero Trust", "SIEM", "DLP"],
+    code: `@enterprise_security({
+  encryption: 'FIPS-140-2',
+  compliance: ['SOC2', 'ISO27001'],
+  zero_trust: true
+})`
+  },
+  {
+    category: "Cloud Infrastructure",
+    items: ["AWS", "Azure", "GCP", "Kubernetes", "Terraform", "ArgoCD"],
+    code: `deploy.multi_region({
+  regions: global_coverage,
+  failover: automatic,
+  cost_optimization: true
 })`
   }
 ];
@@ -51,10 +52,10 @@ export default function IntegrationShowcase() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6">
-            Integrates with your entire stack
+            Enterprise ecosystem integration
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Connect to any data source, processing engine, or observability tool
+            Seamlessly connects to your cloud infrastructure, data platforms, ML systems, and security tools
           </p>
         </motion.div>
 
