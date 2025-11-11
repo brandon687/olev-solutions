@@ -1,0 +1,14 @@
+run = "pnpm dev"
+entrypoint = "package.json"
+hidden = [".config", ".next"]
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+run = ["sh", "-c", "pnpm install && pnpm build && pnpm start"]
+deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
